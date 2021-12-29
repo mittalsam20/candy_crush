@@ -13,8 +13,8 @@ const App = () => {
       const randomColor = candyColors[Math.floor(Math.random() * candyColors.length)];
 myboard.push(randomColor);
     }
-    console.log(myboard)
     setCurrentBoard(myboard);
+    console.log(currentBoard)
   }
 
 useEffect(()=>{
@@ -22,7 +22,18 @@ useEffect(()=>{
 },[])
 
 
-  return <div className="App"></div>
+  return <div className="app">
+    <div className="game">
+{currentBoard.map((ele,index)=>{
+console.log(ele);
+return(
+<img key={index} style={{backgroundColor:ele}}  />
+
+  )
+
+})}      
+    </div>
+  </div>
 }
 
 export default App
