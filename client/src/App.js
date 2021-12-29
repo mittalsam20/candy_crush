@@ -28,6 +28,37 @@ const App = () => {
     }
   };
 
+  const checkForRowOfThree = () => {
+    for (let i = 0; i < 64; i++) {
+      const rowOfThree = [i, i + 1, i + 2];
+      const decidedColor = currentBoard[i];
+      const notValid = [
+        6, 7, 14, 15, 22, 23, 30, 31, 38, 39, 46, 47, 54, 55, 63, 64,
+      ];
+
+      if (notValid.includes(i)) continue;
+
+      if (rowOfThree.every((square) => currentBoard[square] === decidedColor))
+        rowOfThree.forEach((square) => (currentBoard[square] = " "));
+    }
+  };
+
+  const checkForRowOfFour = () => {
+    for (let i = 0; i < 64; i++) {
+      const rowOfFour = [i, i + 1, i + 2, i + 3];
+      const decidedColor = currentBoard[i];
+      const notValid = [
+        5, 6, 7, 13, 14, 15, 21, 22, 23, 29, 30, 31, 37, 38, 39, 45, 46, 47, 53,
+        54, 55, 62, 63, 64,
+      ];
+
+      if (notValid.includes(i)) continue;
+
+      if (rowOfFour.every((square) => currentBoard[square] === decidedColor))
+        rowOfFour.forEach((square) => (currentBoard[square] = " "));
+    }
+  };
+
   const createBoard = () => {
     const myboard = [];
     for (let i = 0; i < width * width; i++) {
@@ -47,11 +78,19 @@ const App = () => {
     const timer = setInterval(() => {
       checkForColumnOfFour();
       checkForColumnOfThree();
+      checkForRowOfFour();
+      checkForRowOfThree();
       setCurrentBoard([...currentBoard]);
     }, 100);
 
     return () => clearInterval(timer);
-  }, [checkForColumnOfFour, checkForColumnOfThree, currentBoard]);
+  }, [
+    checkForColumnOfFour,
+    checkForColumnOfThree,
+    checkForRowOfThree,
+    checkForRowOfFour,
+    currentBoard,
+  ]);
 
   return (
     <div className="app">
