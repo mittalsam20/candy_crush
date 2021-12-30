@@ -3,11 +3,14 @@ import "./App.css";
 
 const App = () => {
   const [currentBoard, setCurrentBoard] = useState([]);
+  const [squareBeingDragged, setSquareBeingDragged] = useState(null);
+  const [squareBeingReplaced, setSquareBeingReplaced] = useState(null);
+
   const candyColors = ["blue", "green", "red", "yellow", "orange", "yellow"];
   const width = 8;
 
   const checkForColumnOfThree = () => {
-    for (let i = 0; i < 47; i++) {
+    for (let i = 0; i <= 47; i++) {
       const columnOfThree = [i, i + width, i + width * 2];
       const decidedColor = currentBoard[i];
 
@@ -19,7 +22,7 @@ const App = () => {
   };
 
   const checkForColumnOfFour = () => {
-    for (let i = 0; i < 39; i++) {
+    for (let i = 0; i <= 39; i++) {
       const columnOfFour = [i, i + width, i + width * 2, i + width * 3];
       const decidedColor = currentBoard[i];
 
@@ -74,14 +77,27 @@ const App = () => {
     }
   };
 
-  const dragStart = () => {
+  const dragStart = (e) => {
     console.log("starting");
+    console.log(e.target);
+    setSquareBeingDragged(e.target);
   };
-  const dragDrop = () => {
+  const dragDrop = (e) => {
     console.log("Dropped");
+    console.log(e.target);
+    setSquareBeingReplaced(e.target);
   };
-  const dragEnd = () => {
+  const dragEnd = (e) => {
     console.log("Ended");
+    console.log(e.target);
+    const squareBeingReplacedId = parseInt(
+      squareBeingReplaced.getAttribute("data-id")
+    );
+    const squareBeingDraggedId = parseInt(
+      squareBeingDragged.getAttribute("data-id")
+    );
+
+    console.log(squareBeingDraggedId, squareBeingReplacedId);
   };
 
   const createBoard = () => {
