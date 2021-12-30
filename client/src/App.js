@@ -51,11 +51,18 @@ const App = () => {
         5, 6, 7, 13, 14, 15, 21, 22, 23, 29, 30, 31, 37, 38, 39, 45, 46, 47, 53,
         54, 55, 62, 63, 64,
       ];
-
       if (notValid.includes(i)) continue;
-
       if (rowOfFour.every((square) => currentBoard[square] === decidedColor))
         rowOfFour.forEach((square) => (currentBoard[square] = " "));
+    }
+  };
+
+  const moveSquareBelow = () => {
+    for (let i = 0; i < 64 - width; i++) {
+      if (currentBoard[i + width] === " ") {
+        currentBoard[i + width] = currentBoard[i];
+        currentBoard[i] = " ";
+      }
     }
   };
 
@@ -80,6 +87,7 @@ const App = () => {
       checkForColumnOfThree();
       checkForRowOfFour();
       checkForRowOfThree();
+      moveSquareBelow();
       setCurrentBoard([...currentBoard]);
     }, 100);
 
@@ -89,6 +97,7 @@ const App = () => {
     checkForColumnOfThree,
     checkForRowOfThree,
     checkForRowOfFour,
+    moveSquareBelow,
     currentBoard,
   ]);
 
