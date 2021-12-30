@@ -97,6 +97,9 @@ const App = () => {
       squareBeingDragged.getAttribute("data-id")
     );
 
+    currentBoard[squareBeingReplacedId] = squareBeingDragged.alt;
+    currentBoard[squareBeingDraggedId] = squareBeingReplaced.alt;
+
     console.log(squareBeingDraggedId, squareBeingReplacedId);
   };
 
