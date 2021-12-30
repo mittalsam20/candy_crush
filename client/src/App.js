@@ -74,6 +74,16 @@ const App = () => {
     }
   };
 
+  const dragStart = () => {
+    console.log("starting");
+  };
+  const dragDrop = () => {
+    console.log("Dropped");
+  };
+  const dragEnd = () => {
+    console.log("Ended");
+  };
+
   const createBoard = () => {
     const myboard = [];
     for (let i = 0; i < width * width; i++) {
@@ -113,8 +123,28 @@ const App = () => {
     <div className="app">
       <div className="game">
         {currentBoard.map((ele, index) => {
-          console.log(ele);
-          return <img key={index} style={{ backgroundColor: ele }} alt={ele} />;
+          // console.log(ele);
+          return (
+            <img
+              key={index}
+              style={{ backgroundColor: ele }}
+              alt={ele}
+              data-id={index}
+              draggable={true}
+              onDragStart={dragStart}
+              onDragOver={(e) => {
+                e.preventDefault();
+              }}
+              onDragEnter={(e) => {
+                e.preventDefault();
+              }}
+              onDragLeave={(e) => {
+                e.preventDefault();
+              }}
+              onDrop={dragDrop}
+              onDragEnd={dragEnd}
+            />
+          );
         })}
       </div>
     </div>
