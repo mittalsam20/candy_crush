@@ -16,8 +16,10 @@ const App = () => {
 
       if (
         columnOfThree.every((square) => currentBoard[square] === decidedColor)
-      )
+      ) {
         columnOfThree.forEach((square) => (currentBoard[square] = " "));
+        return true;
+      }
     }
   };
 
@@ -26,8 +28,12 @@ const App = () => {
       const columnOfFour = [i, i + width, i + width * 2, i + width * 3];
       const decidedColor = currentBoard[i];
 
-      if (columnOfFour.every((square) => currentBoard[square] === decidedColor))
+      if (
+        columnOfFour.every((square) => currentBoard[square] === decidedColor)
+      ) {
         columnOfFour.forEach((square) => (currentBoard[square] = " "));
+        return true;
+      }
     }
   };
 
@@ -41,8 +47,10 @@ const App = () => {
 
       if (notValid.includes(i)) continue;
 
-      if (rowOfThree.every((square) => currentBoard[square] === decidedColor))
+      if (rowOfThree.every((square) => currentBoard[square] === decidedColor)) {
         rowOfThree.forEach((square) => (currentBoard[square] = " "));
+        return true;
+      }
     }
   };
 
@@ -55,8 +63,10 @@ const App = () => {
         54, 55, 62, 63, 64,
       ];
       if (notValid.includes(i)) continue;
-      if (rowOfFour.every((square) => currentBoard[square] === decidedColor))
+      if (rowOfFour.every((square) => currentBoard[square] === decidedColor)) {
         rowOfFour.forEach((square) => (currentBoard[square] = " "));
+        return true;
+      }
     }
   };
 
@@ -101,6 +111,33 @@ const App = () => {
     currentBoard[squareBeingDraggedId] = squareBeingReplaced.alt;
 
     console.log(squareBeingDraggedId, squareBeingReplacedId);
+
+    const validMoves = [
+      squareBeingDraggedId - 1,
+      squareBeingDraggedId - width,
+      squareBeingDraggedId + 1,
+      squareBeingDraggedId + width,
+    ];
+
+    const isValidMove = validMoves.includes(squareBeingReplacedId);
+    console.log(isValidMove);
+    const isColFour = checkForColumnOfFour();
+    const isRowFour = checkForRowOfFour();
+    const isColThree = checkForColumnOfThree();
+    const isRowThree = checkForRowOfThree();
+
+    if (
+      squareBeingReplacedId &&
+      isValidMove &&
+      (isRowThree || isRowFour || isColFour || isColThree)
+    ) {
+      setSquareBeingDragged(null);
+      setSquareBeingReplaced(null);
+    } else {
+      currentBoard[squareBeingReplacedId] = squareBeingReplaced.alt;
+      currentBoard[squareBeingDraggedId] = squareBeingDragged.alt;
+      setCurrentBoard([...currentBoard]);
+    }
   };
 
   const createBoard = () => {
